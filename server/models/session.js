@@ -48,15 +48,6 @@ class Session extends MongoModels {
                 };
 
                 self.insertOne(document, done);
-            }],
-            clean: ['newSession', function (results, done) {
-
-                const query = {
-                    userId,
-                    key: { $ne: results.keyHash.hash }
-                };
-
-                self.deleteOne(query, done);
             }]
         }, (err, results) => {
 
