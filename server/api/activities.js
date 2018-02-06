@@ -3,7 +3,7 @@ const AuthPlugin = require('../auth');
 const Boom = require('boom');
 const EscapeRegExp = require('escape-string-regexp');
 const Joi = require('joi');
-
+const Mongodb = require('mongodb')
 
 const internals = {};
 
@@ -68,10 +68,10 @@ internals.applyRoutes = function (server, next) {
             }
         },
         handler: function (request, reply) {
-            const id = request.auth.credentials.user._id.toString();
-            console.log(id);
+            const user_id = request.auth.credentials.user._id.toString();
+            // console.log(id);
 
-            Activity.findByUserId(id, (err, predictions) => {
+            Activity.find({user_id: user_id}, (err, predictions) => {
 
                 if (err) {
                     return reply(err);
@@ -123,24 +123,21 @@ internals.applyRoutes = function (server, next) {
         config: {
             auth: {
                 strategy: 'session',
-                scope: 'admin'
+                scope: ['admin', 'account']
             },
             validate: {
                 payload: {
-                    pivot: Joi.string().required(),
-                    name: Joi.string().required()
+                    text: Joi.string().required()
                 }
-            },
-            pre: [
-                AuthPlugin.preware.ensureAdminGroup('root')
-            ]
+            }
         },
         handler: function (request, reply) {
+            const user_id = request.auth.credentials.user._id.toString();
+            const username = request.auth.credentials.user.username.toString();
+            const text = request.payload.text;
 
-            const pivot = request.payload.pivot;
-            const name = request.payload.name;
-
-            Activity.create(pivot, name, (err, status) => {
+            // Activity.create
+            Activity.insertOne({text: text, user_id: user_id, username: username, tasks: [] }, (err, status) => {
 
                 if (err) {
                     return reply(err);
@@ -158,27 +155,23 @@ internals.applyRoutes = function (server, next) {
         config: {
             auth: {
                 strategy: 'session',
-                scope: 'admin'
-            },
-            validate: {
-                payload: {
-                    name: Joi.string().required()
-                }
-            },
-            pre: [
-                AuthPlugin.preware.ensureAdminGroup('root')
-            ]
+                scope: ['admin', 'account']
+            }
         },
         handler: function (request, reply) {
+          const user_id = request.auth.credentials.user._id.toString();
+          const username = request.auth.credentials.user.username.toString();
+          const text = request.payload.text;
 
-            const id = request.params.id;
+            const id = Mongodb.ObjectId(request.params.id);
             const update = {
                 $set: {
-                    name: request.payload.name
+                    text: request.payload.text,
+                    tasks: request.payload.tasks
                 }
             };
 
-            Activity.findByIdAndUpdate(id, update, (err, status) => {
+            Activity.findOneAndUpdate({_id: id, user_id: user_id}, update, (err, status) => {
 
                 if (err) {
                     return reply(err);

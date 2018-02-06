@@ -172,6 +172,12 @@ const manifest = {
             plugin: './server/web/account'
         },
         {
+            plugin: './server/web/mines'
+        },
+        // {
+        //     plugin: './server/web/maps'
+        // },
+        {
             plugin: './server/web/admin'
         },
         {

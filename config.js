@@ -41,8 +41,8 @@ const config = {
             uri: {
                 $filter: 'env',
                 production: process.env.MONGODB_URI,
-                test: 'mongodb://localhost:27017/aqua-test',
-                $default: 'mongodb://localhost:27017/aqua'
+                test: 'mongodb://localhost:27017/themines-test',
+                $default: 'mongodb://localhost:27017/themines'
             }
         },
         autoIndex: true

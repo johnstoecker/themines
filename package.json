@@ -1,7 +1,7 @@
 {
-  "name": "aqua",
+  "name": "themines",
   "version": "7.0.2",
-  "description": "A website and user system for Node.js",
+  "description": "Musical exploration through daily practice",
   "main": "index.js",
   "scripts": {
     "start": "gulp",
