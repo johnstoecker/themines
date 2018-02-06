@@ -12,7 +12,7 @@ const criteria = {
 
 const config = {
     $meta: 'This file configures the plot device.',
-    projectName: 'Aqua',
+    projectName: 'TheMines',
     port: {
         web: {
             $filter: 'env',
@@ -24,7 +24,7 @@ const config = {
     baseUrl: {
         $filter: 'env',
         $meta: 'values should not end in "/"',
-        production: 'https://getaqua.herokuapp.com',
+        production: 'https://themines.net',
         $default: 'http://127.0.0.1:8000'
     },
     authAttempts: {
@@ -52,18 +52,18 @@ const config = {
         port: 465,
         secure: true,
         auth: {
-            user: 'jedireza@gmail.com',
+            user: 'ironwagers@gmail.com',
             pass: process.env.SMTP_PASSWORD
         }
     },
     system: {
         fromAddress: {
             name: 'Aqua',
-            address: 'jedireza@gmail.com'
+            address: 'ironwagers@gmail.com'
         },
         toAddress: {
             name: 'Aqua',
-            address: 'jedireza@gmail.com'
+            address: 'ironwagers@gmail.com'
         }
     }
 };
