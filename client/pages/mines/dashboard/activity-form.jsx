@@ -41,7 +41,7 @@ class ActivityForm extends React.Component {
     }
 
     handleDoneChange(event) {
-
+      Actions.saveDaily({date: new Date(), is_complete: false})
     }
 
     handleAddTask() {

@@ -48,6 +48,16 @@ class Actions {
         );
     }
 
+    static saveDaily(data) {
+      ApiActions.post(
+        '/api/dailies',
+        data,
+        Store,
+        Constants.SAVE_DAILY,
+        Constants.SAVE_DAILY_RESPONSE
+      )
+    }
+
     static saveDetails(data) {
 
         ApiActions.put(

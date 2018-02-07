@@ -78,7 +78,7 @@ const manifest = {
                         User: './server/models/user',
                         Activity: './server/models/activity',
                         Task: './server/models/task',
-                        DailyActivity: './server/models/activity'
+                        Daily: './server/models/daily'
                     },
                     autoIndex: Config.get('/hapiMongoModels/autoIndex')
                 }
@@ -158,6 +158,12 @@ const manifest = {
         },
         {
             plugin: './server/api/activities',
+            options: {
+                routes: { prefix: '/api' }
+            }
+        },
+        {
+            plugin: './server/api/dailies',
             options: {
                 routes: { prefix: '/api' }
             }

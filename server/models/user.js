@@ -45,6 +45,7 @@ class User extends MongoModels {
                     username: username.toLowerCase(),
                     password: results.passwordHash.hash,
                     email: email.toLowerCase(),
+                    gems: 0,
                     timeCreated: new Date()
                 };
 
@@ -181,6 +182,7 @@ User.schema = Joi.object({
     isActive: Joi.boolean().default(true),
     username: Joi.string().token().lowercase().required(),
     password: Joi.string(),
+    gems: Joi.number().integer().required(),
     email: Joi.string().email().lowercase().required(),
     roles: Joi.object({
         admin: Joi.object({

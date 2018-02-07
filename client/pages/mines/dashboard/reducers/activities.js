@@ -61,22 +61,9 @@ const reducer = function (state = initialState, action) {
             data: state.data
                 .concat([action.response[[0]]])
         })
-
-        // const validation = ParseValidation(action.response);
-        // const stateUpdates = {
-        //     loading: false,
-        //     showSaveSuccess: !action.err,
-        //     error: validation.error,
-        //     hasError: validation.hasError,
-        //     help: validation.help
-        // };
-        //
-        // if (action.response.hasOwnProperty('name')) {
-        //     stateUpdates.name = action.response.name;
-        // }
-        //
-        // return ObjectAssign({}, state, stateUpdates);
     }
+
+    // TODO: do things while we create/update daily
 
     if (action.type === Constants.HIDE_ACTIVITIES_SAVE_SUCCESS) {
         return ObjectAssign({}, state, {

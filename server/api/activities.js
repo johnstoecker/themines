@@ -137,7 +137,7 @@ internals.applyRoutes = function (server, next) {
             const text = request.payload.text;
 
             // Activity.create
-            Activity.insertOne({text: text, user_id: user_id, username: username, tasks: [] }, (err, status) => {
+            Activity.insertOne({text: text, user_id: user_id, username: username, tasks: [], is_current: true }, (err, status) => {
 
                 if (err) {
                     return reply(err);
@@ -159,6 +159,7 @@ internals.applyRoutes = function (server, next) {
             }
         },
         handler: function (request, reply) {
+          // TODO: on update of activity with dailies, copy over + create new one, set old one as not current
           const user_id = request.auth.credentials.user._id.toString();
           const username = request.auth.credentials.user.username.toString();
           const text = request.payload.text;

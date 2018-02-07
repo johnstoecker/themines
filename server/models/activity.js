@@ -1,6 +1,7 @@
 'use strict';
 const Joi = require('joi');
 const MongoModels = require('mongo-models');
+const Task = require('./task')
 
 class Activity extends MongoModels {}
 
@@ -11,6 +12,7 @@ Activity.schema = Joi.object({
     user_id: Joi.string().required(),
     username: Joi.string().required(),
     timeCreated: Joi.date().required(),
+    tasks: Joi.array().items(Task.schema),
     is_current: Joi.boolean().required()
 });
 
