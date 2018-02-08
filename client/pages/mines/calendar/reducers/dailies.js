@@ -11,59 +11,61 @@ const initialState = {
     error: undefined,
     hasError: {},
     help: {},
-    name: {
-        first: '',
-        middle: '',
-        last: ''
-    }
+    data: []
 };
 const reducer = function (state = initialState, action) {
 
-    if (action.type === Constants.GET_DETAILS) {
+    if (action.type === Constants.GET_ACTIVITIES) {
         return ObjectAssign({}, state, {
             loading: true,
             hydrated: false
         });
     }
 
-    if (action.type === Constants.GET_DETAILS_RESPONSE) {
+    if (action.type === Constants.GET_ACTIVITIES_RESPONSE) {
         const validation = ParseValidation(action.response);
-
+        console.log(action.response)
         return ObjectAssign({}, state, {
             loading: false,
             hydrated: true,
             error: validation.error,
             hasError: validation.hasError,
             help: validation.help,
-            name: action.response.name
+            data: action.response
         });
     }
 
-    if (action.type === Constants.SAVE_DETAILS) {
+    if (action.type === Constants.SAVE_NEW_ACTIVITY) {
         return ObjectAssign({}, state, {
             loading: true,
             name: action.request.data.name
         });
+        // return Object.assign({}, state, {
+        //     hydrated: true,
+        //     loading: false,
+        //     pages: action.response.pages,
+        //     items: action.response.items,
+        //     data: state.data
+        //         .concat([action.response])
+        // })
+
     }
 
-    if (action.type === Constants.SAVE_DETAILS_RESPONSE) {
-        const validation = ParseValidation(action.response);
-        const stateUpdates = {
+    if (action.type === Constants.SAVE_NEW_ACTIVITY_RESPONSE) {
+
+        return Object.assign({}, state, {
+            hydrated: true,
             loading: false,
-            showSaveSuccess: !action.err,
-            error: validation.error,
-            hasError: validation.hasError,
-            help: validation.help
-        };
-
-        if (action.response.hasOwnProperty('name')) {
-            stateUpdates.name = action.response.name;
-        }
-
-        return ObjectAssign({}, state, stateUpdates);
+            pages: action.response.pages,
+            items: action.response.items,
+            data: state.data
+                .concat([action.response[[0]]])
+        })
     }
 
-    if (action.type === Constants.HIDE_DETAILS_SAVE_SUCCESS) {
+    // TODO: do things while we create/update daily
+
+    if (action.type === Constants.HIDE_ACTIVITIES_SAVE_SUCCESS) {
         return ObjectAssign({}, state, {
             showSaveSuccess: false
         });
