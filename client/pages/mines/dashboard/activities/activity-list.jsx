@@ -1,10 +1,10 @@
 'use strict';
 const NewActivityForm = require('./new-activity-form.jsx');
 const ActivityForm = require('./activity-form.jsx');
-const Actions = require('./actions');
+const Actions = require('../actions');
 // const PasswordForm = require('./password-form.jsx');
 const React = require('react');
-const Store = require('./store');
+const Store = require('../store');
 // const UserForm = require('./user-form.jsx');
 
 
@@ -38,10 +38,16 @@ class ActivityList extends React.Component {
     }
 
     render() {
+      console.log(this.state)
       const activities = (this.state.activities.hydrated && this.state.activities.data.map((activity) => {
+        if (activity) {
           return (
-              <ActivityForm {...activity} />
+              <ActivityForm {...activity} key={activity._id} />
           )
+        } else {
+          // new activity doesn't have an id, dont show
+          return null
+        }
       })) || []
 
         return (

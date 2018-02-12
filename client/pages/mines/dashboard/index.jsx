@@ -1,6 +1,6 @@
 'use strict';
-const NewActivityForm = require('./new-activity-form.jsx');
-const ActivityList = require('./activity-list.jsx');
+const NewActivityForm = require('./activities/new-activity-form.jsx');
+const ActivityList = require('./activities/activity-list.jsx');
 const Actions = require('./actions');
 // const PasswordForm = require('./password-form.jsx');
 const React = require('react');

@@ -63,6 +63,18 @@ const reducer = function (state = initialState, action) {
         })
     }
 
+    if (action.type === Constants.UPDATE_ACTIVITY_RESPONSE) {
+
+        return Object.assign({}, state, {
+            hydrated: true,
+            loading: false,
+            pages: action.response.pages,
+            items: action.response.items,
+            data: state.data
+                .concat([action.response[[0]]])
+        })
+    }
+
     // TODO: do things while we create/update daily
 
     if (action.type === Constants.HIDE_ACTIVITIES_SAVE_SUCCESS) {

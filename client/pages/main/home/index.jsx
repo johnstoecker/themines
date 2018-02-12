@@ -1,5 +1,6 @@
 'use strict';
 const React = require('react');
+// const Actions = require('../login/actions');
 const ReactHelmet = require('react-helmet');
 const ReactRouter = require('react-router-dom');
 
@@ -9,6 +10,13 @@ const Link = ReactRouter.Link;
 
 
 class HomePage extends React.Component {
+    constructor(props) {
+
+        super(props);
+        // Actions.getUserCreds();
+    }
+
+
     render() {
 
         return (

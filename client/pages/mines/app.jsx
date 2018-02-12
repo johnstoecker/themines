@@ -1,6 +1,7 @@
 'use strict';
 const Footer = require('./footer.jsx');
 const Dashboard = require('./dashboard/index.jsx');
+const Calendar = require('./calendar/index.jsx');
 const Navbar = require('./navbar.jsx');
 const NotFound = require('./not-found.jsx');
 const React = require('react');
@@ -17,6 +18,7 @@ const App = (
             <Route component={Navbar} />
             <Switch>
                 <Route path="/mines" exact component={Dashboard} />
+                <Route path="/calendar" exact component={Calendar} />
 
                 <Route component={NotFound} />
             </Switch>

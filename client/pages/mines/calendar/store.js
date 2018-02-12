@@ -4,6 +4,6 @@ const Redux = require('redux');
 
 module.exports = Redux.createStore(
     Redux.combineReducers({
-        dailies: dailies
+        dailies: Dailies
     })
 );

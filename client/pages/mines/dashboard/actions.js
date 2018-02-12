@@ -44,11 +44,18 @@ class Actions {
             data,
             Store,
             Constants.UPDATE_ACTIVITY,
-            Constants.UPDATE_ACTIVITY_RESPONSE
+            Constants.UPDATE_ACTIVITY_RESPONSE,
+            (err, response) => {
+
+                if (!err) {
+                    this.getActivities()
+                }
+            }
         );
     }
 
     static saveDaily(data) {
+      console.log(data)
       ApiActions.post(
         '/api/dailies',
         data,

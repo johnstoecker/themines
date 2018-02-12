@@ -1,13 +1,13 @@
 'use strict';
-const Actions = require('./actions');
-const Alert = require('../../../components/alert.jsx');
-const Button = require('../../../components/form/button.jsx');
-const ControlGroup = require('../../../components/form/control-group.jsx');
-const LinkState = require('../../../helpers/link-state');
+const Actions = require('../actions');
+const Alert = require('../../../../components/alert.jsx');
+const Button = require('../../../../components/form/button.jsx');
+const ControlGroup = require('../../../../components/form/control-group.jsx');
+const LinkState = require('../../../../helpers/link-state');
 const PropTypes = require('prop-types');
 const React = require('react');
-const Spinner = require('../../../components/form/spinner.jsx');
-const TextControl = require('../../../components/form/text-control.jsx');
+const Spinner = require('../../../../components/form/spinner.jsx');
+const TextControl = require('../../../../components/form/text-control.jsx');
 
 
 const propTypes = {

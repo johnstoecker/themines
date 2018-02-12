@@ -1,13 +1,14 @@
 'use strict';
-const Actions = require('./actions');
-const Alert = require('../../../components/alert.jsx');
-const Button = require('../../../components/form/button.jsx');
-const ControlGroup = require('../../../components/form/control-group.jsx');
-const LinkState = require('../../../helpers/link-state');
+const Actions = require('../actions');
+const Alert = require('../../../../components/alert.jsx');
+const Button = require('../../../../components/form/button.jsx');
+const ControlGroup = require('../../../../components/form/control-group.jsx');
+const LinkState = require('../../../../helpers/link-state');
 const PropTypes = require('prop-types');
 const React = require('react');
-const Spinner = require('../../../components/form/spinner.jsx');
-const TextControl = require('../../../components/form/text-control.jsx');
+const Spinner = require('../../../../components/form/spinner.jsx');
+const TextControl = require('../../../../components/form/text-control.jsx');
+const Lodash = require('lodash')
 
 
 const propTypes = {
@@ -40,18 +41,44 @@ class ActivityForm extends React.Component {
         this.setState({editing: false})
     }
 
-    handleDoneChange(event) {
-      Actions.saveDaily({date: new Date(), is_complete: false})
+    handleTaskDelete(taskIndex) {
+      var newTasks = this.state.tasks
+      newTasks = newTasks.slice(0, taskIndex).concat(newTasks.slice(taskIndex+1, newTasks.length))
+      this.setState({tasks: newTasks})
+    }
+
+    handleTaskChange(taskIndex, event) {
+      event.preventDefault()
+      event.stopPropagation()
+      console.log(event.target.value)
+      console.log(taskIndex)
+      var newTasks = this.state.tasks
+      newTasks[taskIndex].text = event.target.value
+      this.setState({tasks: newTasks})
+    }
+
+    handleDoneChange(isGoing, taskIndex, event) {
+      console.log(event.target.checked)
+      var newTasks = this.state.tasks
+
+      newTasks[taskIndex].isGoing = event.target.checked
+      this.setState({tasks: newTasks})
+      Actions.saveDaily({date: new Date(), is_complete: this.isComplete()})
+    }
+
+    isComplete() {
+      console.log(this.state.tasks)
+        !!(_.every(this.state.tasks, 'isGoing'))
     }
 
     handleAddTask() {
       this.setState({
-        tasks: this.state.tasks.concat({text: "xxx"})
+        tasks: this.state.tasks.concat({})
       })
     }
 
     handleEditSubmit(event) {
-
+        console.log(this.state)
         event.preventDefault();
         event.stopPropagation();
         this.stopEditing()
@@ -60,6 +87,7 @@ class ActivityForm extends React.Component {
             text: this.state.text,
             tasks: this.state.tasks,
         });
+        console.log(this.state)
     }
 
     startEditing() {
@@ -97,15 +125,18 @@ class ActivityForm extends React.Component {
         }
 
 
-        const editingTasks = (this.state.tasks && this.state.tasks.map((task) => {
+        const editingTasks = (this.state.tasks && this.state.tasks.map((task, taskIndex) => {
+            var taskText = task.text;
             return (
-                <div key={Math.random()}>
+                <div key={taskIndex}>
                   <TextControl
                       name="task.text"
+                      placeholder="Measures 30-38 slowly"
                       value={task.text}
-                      onChange={LinkState.bind(this)}
+                      onChange={this.handleTaskChange.bind(this, taskIndex)}
                       disabled={this.props.loading}
                   />
+                <div className="fa fa-trash" onClick={this.handleTaskDelete.bind(this, taskIndex)}/>
                 </div>
             )
         })) || []
@@ -151,14 +182,14 @@ class ActivityForm extends React.Component {
         )
 
 
-        const currentTasks = (this.state.tasks && this.state.tasks.map((task) => {
+        const currentTasks = (this.state.tasks && this.state.tasks.map((task, taskIndex) => {
             return (
                 <div key={Math.random()}>
                   <input
                               name="complete"
                               type="checkbox"
-                              checked={this.state.isGoing}
-                              onChange={this.handleDoneChange} />
+                              checked={task.isGoing}
+                              onChange={this.handleDoneChange.bind(this, task.isGoing, taskIndex)} />
                             {task.text}
                 </div>
             )
@@ -173,7 +204,7 @@ class ActivityForm extends React.Component {
               </form>
         )
 
-        return (<div>
+        return (<div >
           {editingForm}
           {doneForm}
         </div>

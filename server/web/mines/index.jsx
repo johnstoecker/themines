@@ -9,7 +9,6 @@ class MinesPage extends React.Component {
             <html>
                 <head>
                     <title>Mines</title>
-                    Welcome to the mines.
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                     <link rel="stylesheet" href="/public/core.min.css" />
                     <link rel="stylesheet" href="/public/pages/mines.min.css" />

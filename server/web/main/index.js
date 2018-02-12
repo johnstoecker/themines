@@ -53,6 +53,43 @@ internals.applyRoutes = function (server, next) {
         handler: internals.routeHandler
     });
 
+    server.route({
+        method: 'GET',
+        path: '/',
+        config: {
+            auth: {
+                mode: 'try',
+                strategy: 'session'
+            },
+            plugins: {
+                'hapi-auth-cookie': {
+                    redirectTo: false
+                }
+            }
+        },
+        handler: function (request, reply) {
+
+            if (request.params.glob !== 'logout' &&
+                request.auth.isAuthenticated) {
+
+                if (request.auth.credentials.user.roles.admin) {
+                    return reply.redirect('/admin');
+                }
+
+                return reply.redirect('/mines');
+            }
+
+            if (!request.auth.isAuthenticated) {
+                request.app.headers = {
+                    'x-auth-required': true
+                };
+            }
+
+            internals.routeHandler(request, reply);
+        }
+    });
+
+
 
     server.route({
         method: 'GET',
@@ -77,7 +114,7 @@ internals.applyRoutes = function (server, next) {
                     return reply.redirect('/admin');
                 }
 
-                return reply.redirect('/account');
+                return reply.redirect('/mines');
             }
 
             if (!request.auth.isAuthenticated) {

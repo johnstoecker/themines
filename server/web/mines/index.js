@@ -22,6 +22,21 @@ internals.applyRoutes = function (server, next) {
     });
 
 
+    server.route({
+        method: 'GET',
+        path: '/calendar/{glob*}',
+        config: {
+            auth: {
+                strategy: 'session',
+                scope: 'account'
+            }
+        },
+        handler: function (request, reply) {
+
+            reply.view('mines/index');
+        }
+    });
+
     next();
 };
 
